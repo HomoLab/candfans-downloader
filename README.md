@@ -58,6 +58,10 @@ Only content from plans you have actively subscribed to is accessible. The scrip
 - Only downloads content you have access to through your subscriptions
 - In-browser download buffers the whole video before saving. The script normally remuxes HLS segments into `.mp4`; if mux.js is unavailable or remuxing fails, it falls back to a `.ts` file that can be remuxed with ffmpeg: `ffmpeg -i video.ts -c copy video.mp4`
 
+## Source
+
+[GitHub Repository](https://github.com/HomoLab/candfans-downloader)
+
 ## License
 
 MIT
