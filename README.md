@@ -16,7 +16,7 @@ Runs in the browser with your existing Candfans login session. It uses `mux.js` 
 ## Install
 
 1. Install [Tampermonkey](https://www.tampermonkey.net/) browser extension
-2. Click to install: [candfans-downloader.user.js](../../raw/HEAD/candfans-downloader.user.js)
+2. Click to install from [Greasy Fork](https://greasyfork.org/scripts/571983-candfans-downloader)
 3. Navigate to any creator's page on `candfans.com` or `candfans.jp`
 
 ## Usage
