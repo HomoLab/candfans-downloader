@@ -1,10 +1,11 @@
 // ==UserScript==
 // @name         Candfans Downloader
 // @namespace    https://github.com/candfans-downloader
-// @version      2.2.0
+// @version      2.2.3
 // @description  One-click scan & download videos from Candfans creators you subscribe to.
 // @author       candfans-downloader
 // @match        https://candfans.jp/*
+// @match        https://candfans.com/*
 // @license      MIT
 // @grant        none
 // @require      https://cdn.jsdelivr.net/npm/mux.js@7.0.3/dist/mux.min.js
@@ -160,7 +161,7 @@
   }
 
   async function apiFetch(path) {
-    const resp = await fetch(`https://candfans.jp/api${path}`, { credentials: 'include' });
+    const resp = await fetch(`${location.origin}/api${path}`, { credentials: 'include' });
     if (!resp.ok) throw new Error(`API ${resp.status}: ${path}`);
     return resp.json();
   }
@@ -367,6 +368,7 @@
 
     // Transmux TS → fragmented MP4
     let blob;
+    let downloadName = filename;
     if (typeof muxjs !== 'undefined') {
       try {
         const mp4Data = await transmuxTsToMp4(tsBuffer);
@@ -374,14 +376,16 @@
       } catch (e) {
         console.warn('[Candfans DL] Transmux failed, falling back to raw TS:', e);
         blob = new Blob(chunks, { type: 'video/mp2t' });
+        downloadName = filename.replace(/\.mp4$/i, '.ts');
       }
     } else {
       blob = new Blob(chunks, { type: 'video/mp2t' });
+      downloadName = filename.replace(/\.mp4$/i, '.ts');
     }
 
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = filename;
+    a.download = downloadName;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -577,7 +581,6 @@
           <label>Content</label>
           <select id="cfd-type">
             <option value="video">Videos only</option>
-            <option value="all">All</option>
           </select>
         </div>
         <div>
